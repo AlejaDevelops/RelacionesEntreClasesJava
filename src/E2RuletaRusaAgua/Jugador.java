@@ -56,7 +56,7 @@ public class Jugador {
 
     @Override
     public String toString() {
-        return "Jugador " + id + "{ nombre= " + nombre +" , mojado=" + mojado + '}';
+        return "Jugador " + id + "{ nombre= " + nombre +" , mojado= " + mojado + '}';
     } 
     
 }

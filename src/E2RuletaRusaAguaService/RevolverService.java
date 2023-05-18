@@ -21,8 +21,8 @@ public class RevolverService {
     
     public Revolver llenarRevolver(){
         Revolver r = new Revolver();
-        r.setPosicionActual((int)Math.random()*6);
-        r.setPosicionAgua((int)Math.random()*6);
+        r.setPosicionActual((int)(Math.random()*6)+1);
+        r.setPosicionAgua((int)(Math.random()*6)+1);
         
         return r;
     }

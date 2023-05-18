@@ -22,17 +22,19 @@ import E2RuletaRusaAgua.Revolver;
  * @author AlejaDevelops
  */
 public class JugadorService {
-    private boolean disparo(Revolver r){
+    public boolean disparo(Revolver r){
         RevolverService rs = new RevolverService();      
-
-        if (!rs.mojar(r)) {
-            rs.siguienteChorro(r);
-            System.out.println("No te has mojado, sigue jugando!");
-            return true;
-        } else{
+        
+        if (rs.mojar(r)) {
             System.out.println("Te has mojado, has perdido! :( ");
             return false;
-        }
+            
+        } else{
+            rs.siguienteChorro(r);
+            System.out.println("No te has mojado! Sigue el juego!");
+            System.out.println("-----------------------------------------------");
+            return true;
+        } 
     }
 
     

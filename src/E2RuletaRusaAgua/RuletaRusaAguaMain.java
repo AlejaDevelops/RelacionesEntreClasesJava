@@ -39,44 +39,21 @@ Pensar la lógica necesaria para realizar esto, usando los atributos de la clase
  */
 package E2RuletaRusaAgua;
 
+import E2RuletaRusaAguaService.JuegoService;
+
 /**
  *
  * @author AlejaDevelops
  */
-public class Revolver {
-    private int posicionActual, posicionAgua;
+public class RuletaRusaAguaMain {
 
-    public Revolver() {
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        JuegoService js = new JuegoService();
+        Juego game = js.llenarJuego();
+        js.ronda(game);
     }
-
-    public Revolver(int posicionActual, int posicionAgua) {
-        this.posicionActual = posicionActual;
-        this.posicionAgua = posicionAgua;
-    }
-
-    public int getPosicionActual() {
-        return posicionActual;
-    }
-
-    public void setPosicionActual(int posicionActual) {
-        this.posicionActual = posicionActual;
-    }
-
-    public int getPosicionAgua() {
-        return posicionAgua;
-    }
-
-    public void setPosicionAgua(int posicionAgua) {
-        this.posicionAgua = posicionAgua;
-    }
-
-    @Override
-    public String toString() {
-        return "Revolver{" + "Posición Actual= " + posicionActual + ", Posición del Agua= " + posicionAgua + '}';
-    }
-    
-    
     
 }
-    
-
