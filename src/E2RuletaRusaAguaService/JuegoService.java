@@ -51,7 +51,7 @@ public class JuegoService {
         System.out.println("------------------------------");
         juego.setJugadores(listaJ);
         juego.setR(rs.llenarRevolver());  //Llenado inicial, ocurre solo una vez, al inicio del juego
-        System.out.println(juego.getR().toString()); //Impresión de las Posiciones iniciales a modo de prueba
+        //System.out.println(juego.getR().toString()); //Impresión de las Posiciones iniciales a modo de prueba
         //System.out.println(juego.getJugadores().toString());//Impresión de los jugadores a modo de prueba
         return juego;
     }
