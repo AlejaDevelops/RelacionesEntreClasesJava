@@ -92,7 +92,7 @@ public class BarajaService {
         }
 
         return cartasEntregadas;
-    }
+    } //VERIFICAR CUANDO NO HAYAN MAS CARTAS PARA REPARTIR
 
     public void cartasDisponibles(ArrayList<Carta> baraja) {
         System.out.println("La cantidad de cartas que aún se pueden repartir es: " + baraja.size());
