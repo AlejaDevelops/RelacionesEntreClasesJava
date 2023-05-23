@@ -18,22 +18,24 @@ import java.util.Random;
  * @author AlejaDevelops
  */
 public class PerroService {
-    public ArrayList<Perro> crearPerros(){ //SE DEBE CORREGIR EL DUPLICADO DE LOS NOMBRES
+
+    public ArrayList<Perro> crearPerros() { //SE DEBE CORREGIR EL DUPLICADO DE LOS NOMBRES
         ArrayList<Perro> listaPerros = new ArrayList();
         int n;
-        String[] nombresPerros = {"Luna", "Pachito", "Lola", "Chiquito", "Pluto", "Drack","Pulgoso", "Firulais", "Bruno", "Pepe"};
+        String[] nombresPerros = {"Luna", "Pachito", "Lola", "Chiquito", "Pluto", "Drack", "Pulgoso", "Firulais", "Bruno", "Pepe"};
         String[] razas = {"Labrador", "Poodle", "Bulldog", "Golden Retriever", "Chihuahua", "Husky", "Boxer", "Dalmata", "Pastor Alemán", "Bichón Frisé"};
         String[] tamanios = {"Pequeño", "Mediano", "Grande", "Extra Grande", "Pequeño", "Grande", "Mediano", "Extra Grande", "Mediano", "Grande"};
         Random random = new Random();
-        
-        for (String nombresPerro : nombresPerros) {
-            Perro p = new Perro();            
-            p.setNombre(nombresPerros[random.nextInt(nombresPerros.length)]);           
-            p.setRaza(razas[random.nextInt(razas.length)]);            
-            p.setEdad(random.nextInt(18)+1);           
+
+        for (int i = 0; i < nombresPerros.length; i++) {
+            Perro p = new Perro();
+            p.setNombre(nombresPerros[i]);
+            p.setRaza(razas[random.nextInt(razas.length)]);
+            p.setEdad(random.nextInt(18) + 1);
             p.setTamanio(tamanios[random.nextInt(tamanios.length)]);
-            listaPerros.add(p);           
+            listaPerros.add(p);
         }
-        return listaPerros;        
+
+        return listaPerros;
     }
 }

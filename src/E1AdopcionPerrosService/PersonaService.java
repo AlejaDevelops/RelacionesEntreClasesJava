@@ -35,7 +35,7 @@ public class PersonaService {
             p.setNombreP(nombresP[random.nextInt(apellidos.length)]);
             p.setApellido(apellidos[random.nextInt(apellidos.length)]);
             p.setEdadP(random.nextInt(50) + 18);
-            p.setDocumento(random.nextLong());
+            p.setDocumento(random.nextInt(90000000)+10000000);
             listaPersonas.add(p);
         }
         return listaPersonas;
@@ -77,9 +77,10 @@ public class PersonaService {
     }
 
     public void imprimir(ArrayList<Persona> personas) {
-
+        System.out.println("Listado final de adopción: ");
         for (Persona persona : personas) {
-            System.out.println(persona);
+            System.out.println("*"+persona);
+            System.out.println("");
         }
 
     }
