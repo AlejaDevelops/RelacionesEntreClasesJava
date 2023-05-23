@@ -72,5 +72,11 @@ public class Persona {
         this.perro = perro;
     }
 
+    @Override
+    public String toString() {
+        return "Persona{" + "nombreP=" + nombreP + ", apellido=" + apellido + ", edadP=" + edadP + ", documento=" + documento + ", perro=" + perro + '}';
+    }
+    
+    
     
 }

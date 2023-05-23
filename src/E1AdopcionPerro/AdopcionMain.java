@@ -31,8 +31,8 @@ public class AdopcionMain {
         PerroService perroS = new PerroService();
         ArrayList<Perro> listaPerros = perroS.crearPerros();
         System.out.println("Listas cargadas exitosamente :)"
-                + "\n");
-        ps.adoptandoPerrito(listaPersonas, listaPerros);
+                + "\n");        
+        ps.imprimir(ps.adoptandoPerrito(listaPersonas, listaPerros));
         
     }
     

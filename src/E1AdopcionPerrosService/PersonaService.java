@@ -27,7 +27,7 @@ public class PersonaService {
     public ArrayList<Persona> crearPersonas() {
         ArrayList<Persona> listaPersonas = new ArrayList();
         String[] nombresP = {"Juan", "María", "Pedro", "Laura", "Carlos", "Ana", "Luis", "Marta", "Diego", "Sofía"};
-        String[] apellidos = {"González", "Rodríguez", "López", "Martínez", "Gómez", "Fernández", "Pérez", "Sánchez", "Torres", "Ramírez"};        
+        String[] apellidos = {"González", "Rodríguez", "López", "Martínez", "Gómez", "Fernández", "Pérez", "Sánchez", "Torres", "Ramírez"};
         Random random = new Random();
 
         for (String string : nombresP) {
@@ -41,29 +41,45 @@ public class PersonaService {
         return listaPersonas;
     }
 
-    public void adoptandoPerrito(ArrayList<Persona> personas, ArrayList<Perro> perritos) {
+    public ArrayList<Persona> adoptandoPerrito(ArrayList<Persona> personas, ArrayList<Perro> perritos) {
 
         for (Persona persona : personas) {
-            System.out.println("Hola "+persona.getNombreP()+" "+persona.getApellido());
+            System.out.println("Hola " + persona.getNombreP() + " " + persona.getApellido());
             System.out.println("Esta es la lista de perritos que buscan hogar: " + perritos.toString());
-            System.out.println("************");
-            System.out.println("Ingresa el nombre del perrito que deseas adoptar ");
-            String nombrePerrito = leer.next();
-            Iterator<Perro> it = perritos.iterator();
-              
-            while (it.hasNext()) {
-                Perro next = it.next();
-                if (next.getNombre().equalsIgnoreCase(nombrePerrito)) {
-                    System.out.println("Felicitaciones! Has adoptado a " +next.toString());
-                    System.out.println("----------------------------------------");
-                    it.remove();
-                    break;
+            System.out.println("************");            
+            boolean flag = true;
+
+            do {
+                System.out.println("Ingresa el nombre del perrito que deseas adoptar ");
+                String nombrePerrito = leer.next();
+                Iterator<Perro> it = perritos.iterator();                
+                            
+                while (it.hasNext()) {
+                    Perro next = it.next();
+                    if (next.getNombre().equalsIgnoreCase(nombrePerrito)) {
+                        System.out.println("Felicitaciones!"+persona.getNombreP() + " " + persona.getApellido() +" Has adoptado a " + next.toString());
+                        System.out.println("----------------------------------------");
+                        persona.setPerro(next);
+                        it.remove();
+                        flag = false;
+                        break;
+                    }
                 }
-            }
-            
-            
-            
-            
+                if (flag) {
+                    System.out.println("El nombre ingresado no se encuentra en la lista. Intenta nuevamente");
+                }
+
+            } while (flag);
+
+        }
+        return personas;
+
+    }
+
+    public void imprimir(ArrayList<Persona> personas) {
+
+        for (Persona persona : personas) {
+            System.out.println(persona);
         }
 
     }
