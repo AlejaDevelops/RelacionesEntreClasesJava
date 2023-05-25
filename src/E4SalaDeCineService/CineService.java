@@ -36,7 +36,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author Computador 1
+ * @author AlejaDevelops
  */
 public class CineService {
 
@@ -45,45 +45,136 @@ public class CineService {
     public Cine crearFuncion() {
         PeliculaService ps = new PeliculaService();
         ArrayList<Pelicula> listaPelis = ps.crearPeliculas();
-        Cine x = new Cine();
+        Cine funcion = new Cine();
         String[][] sala = new String[8][6];
+        boolean flag = true;
 
         //SETEO DE PELICULA
-        System.out.println("Elige una pelicula de la lista y escribe su nombre: ");
-        System.out.println(listaPelis);
-        String nombreP = leer.nextLine();
-        for (Pelicula aux : listaPelis) {
-            if (nombreP.equalsIgnoreCase(aux.getFilmName())) {
-                x.setFilm(aux);
+        do {
+            System.out.println("Elige una pelicula de la lista y escribe su nombre: ");
+            System.out.println(listaPelis);
+            String nombreP = leer.nextLine();
+            for (Pelicula aux : listaPelis) {
+                if (aux.getFilmName().equalsIgnoreCase(nombreP)) {
+                    funcion.setFilm(aux);
+                    flag = false;
+                    break;
+
+                }
             }
-        }
+            if (flag) {
+                System.out.println("Título ingresado inválido. Intenta nuevamente");
+            }
+        } while (flag);
+
         //SETEO DEL COSTO DE LA ENTRADA
-        x.setMovieTicketCost(Math.random() * 20);
-        System.out.println("El costo de la entrada es de $"+x.getMovieTicketCost());
+        funcion.setMovieTicketCost(Math.random() * 20);
+        System.out.println("Se está cargando el costo de la entrada..."
+                + "\n El costo de la entrada a esta función es $" + funcion.getMovieTicketCost());
 
-        //SETEO DE LA MATRIZ CON LA NUMERACION DE LAS SILLAS
-        for (int i = 7; i >= 0; i--) {
+        //SETEO DE LA MATRIZ CON LA NUMERACION DE LAS SILLAS 
+        for (int i = 0; i < sala.length; i++) {
             for (int j = 0; j < 6; j++) {
-                sala[i][j] = (i + 1) + " " + (char) ('A' + j) + " | ";
+                sala[i][j] = (8 - i) + "" + (char) ('A' + j) + "_";
             }
         }
-        x.setAudience(sala);
+        funcion.setAudience(sala);
+        System.out.println("--------------------------------------");
 
-        return x;
+        return funcion;
     }
 
-    public void asignarAsiento(Cine funcion) {
+    public boolean imprimirSala(String[][] matrizSala) { //Devuelve true si encuentra asientos vacíos
+        boolean flag = false;
+        for (String[] matrizSala1 : matrizSala) {
+            for (int j = 0; j < 6; j++) {
+                if (matrizSala1[j].endsWith("_")) {
+                    System.out.print(matrizSala1[j] + " | ");
+                    flag = true;
+                } else {
+                    System.out.print(matrizSala1[j] + "| ");
+                }
+            }
+            System.out.println("");
+        }
+        return flag;
+    }
+
+    public String[][] asignarAsiento(String[][] matrizSala) {//Devuelve la Matriz Sala con el asiento asignado o marcado con X
+        int posI, posJ;
+        System.out.println("El sistema escogerá un asiento para ti...");
+        boolean flag, ocupado;
+        do {
+            posI = (int) (Math.random() * 8);
+            posJ = (int) (Math.random() * 6);
+            System.out.println("Posible asiento: " + matrizSala[posI][posJ]);
+            ocupado =  matrizSala[posI][posJ].endsWith("X");
+            System.out.println("El asiento está ocupado? " +ocupado);
+            if (!matrizSala[posI][posJ].endsWith("X")) {
+                System.out.println("El asiento asignado es: " + matrizSala[posI][posJ]);
+                matrizSala[posI][posJ] = matrizSala[posI][posJ] + "X";
+                flag = true;                
+            } else {
+                System.out.println("El sistema te buscará otro asiento");
+                flag = false;
+            }
+        } while (!flag);
+        return matrizSala;
+
+    }
+
+    public void llenarSala(Cine funcion) { //Llena la sala con su código y llamando a los otros métodos
         EspectadorService es = new EspectadorService();
         ArrayList<Espectador> listaEspectadores = es.crearEspectadores();
+        System.out.println(listaEspectadores.size());
+        String[][] matrizAux = funcion.getAudience();
+        boolean asientosVacios;
+        boolean salir = false;
+        int cont = 0;
+        int contA = 0;
+        int contB = 0;
 
         for (Espectador aux : listaEspectadores) {
-            if (aux.getMoney() > funcion.getMovieTicketCost() && aux.getAge() > funcion.getFilm().getMinAge()) {
-                //LOGICA PARA ASIGNAR UNA SILLA ES DECIR, MARCAR UNA X
+
+            if (aux.getMoney() >= funcion.getMovieTicketCost() && aux.getAge() >= funcion.getFilm().getMinAge()) {
+                contA++;
+                System.out.println("¡Hola " + aux.getName() + "! Esta es la sala, los asientos libres estan marcados con _ ");
+                asientosVacios = imprimirSala(matrizAux);
+                if (asientosVacios) {
+                    funcion.setAudience(asignarAsiento(matrizAux));
+                    contB++;
+                    System.out.println("--------------------------------------");
+                } else {
+                    System.out.println("Lo siento, no quedan asientos disponibles...");
+                    salir = true;
+                }
             } else {
-                System.out.println("No puedes ingresar a la sala :(");
+                System.out.print("Lo siento " + aux.getName() + ", no puedes ingresar a la sala porque");
+                cont++;
+                if (aux.getAge() < funcion.getFilm().getMinAge()) {
+                    System.out.println(" no tienes suficiente edad para ver esta película :( ");
+                }
+                if (aux.getMoney() < funcion.getMovieTicketCost()) {
+                    System.out.println(" no tienes suficiente dinero :( ");
+                }
+                System.out.println("--------------------------------------");
+            }
+
+            if (salir) {
+                break;
             }
         }
 
+        System.out.println("Así quedó la sala antes de iniciar la función:");
+        imprimirSala(funcion.getAudience());
+        System.out.println("Personas que cumplen con las condiciones para entrar: " + contA 
+                + "\nPersonas que no pudieron ingresar: " + cont
+                + "\nContador de sillas ocupadas: " + contB
+                +"\n*********************");
+        
+              
     }
 
 }
+
+

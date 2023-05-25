@@ -28,8 +28,7 @@ cada asiento o solo las X y espacios vacíos.
  */
 package E4SalaDeCine;
 
-import E4SalaDeCineService.EspectadorService;
-import java.util.ArrayList;
+import E4SalaDeCineService.CineService;
 
 /**
  *
@@ -40,10 +39,10 @@ public class SalaDeCineMain {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        EspectadorService es = new EspectadorService();
-        ArrayList<Espectador> spectator = es.crearEspectadores();
-        es.printArray(spectator);
+    public static void main(String[] args) {        
+        CineService cs = new CineService();
+        Cine funcion = cs.crearFuncion();        
+        cs.llenarSala(funcion);
     }
     
 }
