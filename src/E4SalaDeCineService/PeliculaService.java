@@ -51,10 +51,5 @@ public class PeliculaService {
         movieList.add(pelicula5);
         
         return movieList;            
-    }
-    
-    public void imprimirListaPelis(ArrayList<Pelicula> p){
-        System.out.println(p);
-    }
-    
+    }  
 }
