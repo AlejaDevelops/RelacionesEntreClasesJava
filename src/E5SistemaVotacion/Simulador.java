@@ -45,7 +45,6 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Scanner;
 
-
 /**
  *
  * @author AlejaDevelops
@@ -68,6 +67,7 @@ public class Simulador {
             Alumno alumno = new Alumno();
             alumno.setDni(aux);
             alumno.setNombreCompleto(listaNombres.get(r.nextInt(listaNombres.size())));
+            alumno.setCantVotos(0);
             listaAlumnos.add(alumno);
         }
 
@@ -108,7 +108,7 @@ public class Simulador {
 
     }
 
-    public void votacion(ArrayList<Alumno> listaAlumnos) {
+    public void votacionManual(ArrayList<Alumno> listaAlumnos) {
 
         for (Alumno alumno : listaAlumnos) {//Recorriendo uno a uno la lista de alumnos
             System.out.println("Hola " + alumno.getNombreCompleto() + " DNI: " + alumno.getDni() + ", es tu turno de votar. Recuerda que debes votar por 3 personas diferentes. "
@@ -133,7 +133,7 @@ public class Simulador {
                         aux1.setCantVotos(aux1.getCantVotos() + 1); //Actualizo la cantidad de votos en aux1                                             
                         alumnosVotadosLista.add(aux1);//Se acumulan las personas por las que vota en alumnosVotadosLista
                         listaAlumnoAux.remove(aux1); // y es elimina la persona por la que se votó de listaAlumnoAux para evitar votar por la misma persona varias veces                        
-                        cont++; //Contador para controlar la salida del do-whileque se encarga de controlar el numero de votación por persona
+                        cont++; //Contador para controlar la salida del do-while que se encarga de controlar el numero de votación por persona
                         flag = false;
                         break; //Una vez se vota, es decir cuando se cumple la condición del if línea 134, se sale del For linea 132 y deja de recorrer la listaAlumnoAux
                     }
@@ -152,7 +152,53 @@ public class Simulador {
                     }
                 }
             }
-        }        
+        }
+    }
+
+    public void votacionAutomatica(ArrayList<Alumno> listaAlumnos) {
+        for (Alumno alumno : listaAlumnos) {//Recorriendo uno a uno la lista de alumnos
+            System.out.println("Hola " + alumno.getNombreCompleto() + " DNI: " + alumno.getDni() + ", es tu turno de votar. Recuerda que debes votar por 3 personas diferentes. "
+                    + "\n Esta es la lista de los alumnos por los que puedes votar: ");
+            ArrayList<Alumno> listaAlumnoAux = new ArrayList(listaAlumnos); //Guardando la lista de alumnos completa                               
+            listaAlumnoAux.remove(alumno); //Removiendo el alumno que está votando de la lista auxiliar
+            imprimirListaAlumnos(listaAlumnoAux);
+            System.out.println("");
+
+            Voto voto = new Voto();
+            voto.setAlumnoVotante(alumno);
+            ArrayList<Alumno> alumnosVotadosLista = new ArrayList();
+            int cont = 0;
+
+            do {
+                System.out.println("El sistema está eligiendo el DNI de la personaa a votar...");                
+                long dniParaVotar = listaAlumnoAux.get(r.nextInt(listaAlumnoAux.size())).getDni();
+                boolean flag = true;
+
+                for (Alumno aux1 : listaAlumnoAux) { //Recorriendo la lista auxiliar, que no contiene el alumno que está votando 
+                    if (aux1.getDni() == dniParaVotar) {
+                        aux1.setCantVotos(aux1.getCantVotos() + 1); //Actualizo la cantidad de votos en aux1                                             
+                        alumnosVotadosLista.add(aux1);//Se acumulan las personas por las que vota en alumnosVotadosLista
+                        listaAlumnoAux.remove(aux1); // y es elimina la persona por la que se votó de listaAlumnoAux para evitar votar por la misma persona varias veces                        
+                        cont++; //Contador para controlar la salida del do-while que se encarga de controlar el numero de votación por persona
+                        flag = false;
+                        break; //Una vez se vota, es decir cuando se cumple la condición del if línea 1, se sale del For linea 178 y deja de recorrer la listaAlumnoAux
+                    }
+                }
+                if (flag) {
+                    System.out.println("El DNI ingresado no es válido, porque no es Alumno registrado o porque ya votaste por él... intenta nuevamente");
+                }
+            } while (cont < 3);
+            voto.setAlumnosConVotos(alumnosVotadosLista); //Se setea la lista de personas por las que votó
+            imprimirVotosIndividuales(voto.getAlumnosConVotos());
+            for (Alumno alumnosConVoto : voto.getAlumnosConVotos()) { //Se actualizan los votos en la listaAlumnos
+                for (Alumno alumno2 : listaAlumnos) {
+                    if (alumno2.getDni() == alumnosConVoto.getDni()) {
+                        alumno2.setCantVotos(alumnosConVoto.getCantVotos());
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     public void imprimirVotosIndividuales(ArrayList<Alumno> AlumnosConVotos) {
@@ -160,20 +206,20 @@ public class Simulador {
         imprimirListaAlumnos(AlumnosConVotos);
         System.out.println("-----------------------------------------------------------------");
     }
-    
-    public void recuentoVotos(ArrayList<Alumno> listaAlumnos){
+
+    public void recuentoVotos(ArrayList<Alumno> listaAlumnos) {
         Collections.sort(listaAlumnos, Comparadores.ordenarPorCantVotos);
         System.out.println("Todos los alumnos han votado, este es el resultado final: ");
         imprimirListaAlumnos(listaAlumnos);
         ArrayList<Alumno> facilitadores = new ArrayList();
         ArrayList<Alumno> facilitadoresSuplentes = new ArrayList();
-        
+
         System.out.println("\n*** Los Facilitadores son: ");
-        facilitadores.addAll(listaAlumnos.subList(0, 2));
+        facilitadores.addAll(listaAlumnos.subList(0, 5));
         imprimirListaAlumnos(facilitadores);
         System.out.println("\n*** Los Facilitadores Suplentes son: ");
-        facilitadoresSuplentes.addAll(listaAlumnos.subList(0, 2));
+        facilitadoresSuplentes.addAll(listaAlumnos.subList(5, 10));
         imprimirListaAlumnos(facilitadoresSuplentes);
     }
-    
+
 }

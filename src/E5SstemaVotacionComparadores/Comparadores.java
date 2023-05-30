@@ -47,7 +47,7 @@ public class Comparadores {
     public static Comparator<Alumno> ordenarPorCantVotos = new Comparator<Alumno>() {
         @Override
         public int compare(Alumno t, Alumno t1) {
-        return t.getCantVotos().compareTo(t1.getCantVotos());
+        return t1.getCantVotos().compareTo(t.getCantVotos());
         }
     };
             

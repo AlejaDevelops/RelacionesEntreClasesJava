@@ -54,7 +54,8 @@ public class SistemaVotacionMain {
         System.out.println("Lista de alumnos generados:");
         s.imprimirListaAlumnos(listaAlumnos);
         System.out.println("-----------------------------------------------------------------");
-        s.votacion(listaAlumnos);
+       // s.votacionManual(listaAlumnos);
+        s.votacionAutomatica(listaAlumnos);
         s.recuentoVotos(listaAlumnos);
     }
     
