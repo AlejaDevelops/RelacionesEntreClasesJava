@@ -27,8 +27,6 @@ Tener en cuenta que un alumno no puede votarse a sí mismo o votar más de una v
 mismo alumno. Utilizar un hashset para resolver esto.
 • Se debe crear un método que muestre a cada Alumno con su cantidad de votos y cuales
 fueron sus 3 votos.
-
-
 • Se debe crear un método que haga el recuento de votos, este recibe la lista de Alumnos y
 comienza a hacer el recuento de votos.
 
@@ -40,10 +38,13 @@ los 5 facilitadores y los 5 facilitadores suplentes.
  */
 package E5SistemaVotacion;
 
+import E5SstemaVotacionComparadores.Comparadores;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Scanner;
+
 
 /**
  *
@@ -151,15 +152,28 @@ public class Simulador {
                     }
                 }
             }
-        }
-        System.out.println("Todos los alumnos han votado, este es el resultado final: ");
-        imprimirListaAlumnos(listaAlumnos);
+        }        
     }
 
     public void imprimirVotosIndividuales(ArrayList<Alumno> AlumnosConVotos) {
         System.out.println("Te confirmo que has votado por: ");
         imprimirListaAlumnos(AlumnosConVotos);
         System.out.println("-----------------------------------------------------------------");
+    }
+    
+    public void recuentoVotos(ArrayList<Alumno> listaAlumnos){
+        Collections.sort(listaAlumnos, Comparadores.ordenarPorCantVotos);
+        System.out.println("Todos los alumnos han votado, este es el resultado final: ");
+        imprimirListaAlumnos(listaAlumnos);
+        ArrayList<Alumno> facilitadores = new ArrayList();
+        ArrayList<Alumno> facilitadoresSuplentes = new ArrayList();
+        
+        System.out.println("\n*** Los Facilitadores son: ");
+        facilitadores.addAll(listaAlumnos.subList(0, 2));
+        imprimirListaAlumnos(facilitadores);
+        System.out.println("\n*** Los Facilitadores Suplentes son: ");
+        facilitadoresSuplentes.addAll(listaAlumnos.subList(0, 2));
+        imprimirListaAlumnos(facilitadoresSuplentes);
     }
     
 }

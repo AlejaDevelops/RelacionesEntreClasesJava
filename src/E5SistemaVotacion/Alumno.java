@@ -43,12 +43,12 @@ package E5SistemaVotacion;
 public class Alumno {
     private String nombreCompleto;
     private long dni;
-    private int cantVotos;
+    private Integer cantVotos;
 
     public Alumno() {
     }
 
-    public Alumno(String nombreCompleto, long dni, int cantVotos) {
+    public Alumno(String nombreCompleto, long dni, Integer cantVotos) {
         this.nombreCompleto = nombreCompleto;
         this.dni = dni;
         this.cantVotos = cantVotos;
@@ -66,15 +66,15 @@ public class Alumno {
         return dni;
     }
 
-    public void setDni(long dni) {
+    public void setDni(Long dni) {
         this.dni = dni;
     }
 
-    public int getCantVotos() {
+    public Integer getCantVotos() {
         return cantVotos;
     }
 
-    public void setCantVotos(int cantVotos) {
+    public void setCantVotos(Integer cantVotos) {
         this.cantVotos = cantVotos;
     }
 
@@ -82,6 +82,9 @@ public class Alumno {
     public String toString() {
         return "Alumno{" + "Nombre: " + nombreCompleto + ", DNI: " + dni + ", Cantidad de votos: " + cantVotos + '}';
     }
+    
+    
+    
     
     
     

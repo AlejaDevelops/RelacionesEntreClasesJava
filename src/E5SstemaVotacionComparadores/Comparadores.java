@@ -35,27 +35,21 @@ comienza a hacer el recuento de votos.
 facilitadores suplentes con los 5 segundos alumnos más votados. A continuación, mostrar
 los 5 facilitadores y los 5 facilitadores suplentes.
  */
-package E5SistemaVotacion;
+package E5SstemaVotacionComparadores;
 
-import java.util.ArrayList;
-
+import java.util.Comparator;
+import E5SistemaVotacion.Alumno;
 /**
  *
  * @author AlejaDevelops
  */
-public class SistemaVotacionMain {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        Simulador s = new Simulador();
-        ArrayList<Alumno> listaAlumnos = s.crearListaAlumnos();
-        System.out.println("Lista de alumnos generados:");
-        s.imprimirListaAlumnos(listaAlumnos);
-        System.out.println("-----------------------------------------------------------------");
-        s.votacion(listaAlumnos);
-        s.recuentoVotos(listaAlumnos);
-    }
+public class Comparadores {
+    public static Comparator<Alumno> ordenarPorCantVotos = new Comparator<Alumno>() {
+        @Override
+        public int compare(Alumno t, Alumno t1) {
+        return t.getCantVotos().compareTo(t1.getCantVotos());
+        }
+    };
+            
     
 }
