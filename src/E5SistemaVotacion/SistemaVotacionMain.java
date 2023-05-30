@@ -2,7 +2,6 @@
 Desarrollar un simulador del sistema de votación de facilitadores en Egg-
 El sistema de votación de Egg tiene una clase llamada Alumno con los siguientes atributos:
 nombre completo, DNI y cantidad de votos. 
-
 Además, crearemos una clase Simulador que va a
 tener los métodos para manejar los alumnos y sus votaciones. Estos métodos serán llamados
 desde el main.
@@ -19,6 +18,8 @@ mismo nombre.
 • Se debe imprimir por pantalla el listado de alumnos.
 • Una vez hecho esto debemos generar una clase Voto, esta clase tendrá como atributos,
 un objeto Alumno que será el alumno que vota y una lista de los alumnos a los que votó.
+
+
 • Crearemos un método votación en la clase Simulador que, recibe el listado de alumnos y
 para cada alumno genera tres votos de manera aleatoria. En este método debemos
 guardar a el alumno que vota, a los alumnos a los que votó y sumarle uno a la cantidad de
@@ -36,53 +37,23 @@ los 5 facilitadores y los 5 facilitadores suplentes.
  */
 package E5SistemaVotacion;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author AlejaDevelops
  */
-public class Alumno {
-    private String nombreCompleto;
-    private long dni;
-    private int cantVotos;
+public class SistemaVotacionMain {
 
-    public Alumno() {
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        Simulador s = new Simulador();
+        ArrayList<Alumno> listaAlumnos = s.crearListaAlumnos();
+        System.out.println("Lista de alumnos generados:");
+        s.imprimirListaAlumnos(listaAlumnos);
+        s.votacion(listaAlumnos);
     }
-
-    public Alumno(String nombreCompleto, long dni, int cantVotos) {
-        this.nombreCompleto = nombreCompleto;
-        this.dni = dni;
-        this.cantVotos = cantVotos;
-    }
-
-    public String getNombreCompleto() {
-        return nombreCompleto;
-    }
-
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
-    }
-
-    public long getDni() {
-        return dni;
-    }
-
-    public void setDni(long dni) {
-        this.dni = dni;
-    }
-
-    public int getCantVotos() {
-        return cantVotos;
-    }
-
-    public void setCantVotos(int cantVotos) {
-        this.cantVotos = cantVotos;
-    }
-
-    @Override
-    public String toString() {
-        return "Alumno{" + "Nombre: " + nombreCompleto + ", DNI: " + dni + ", Cantidad de votos: " + cantVotos + '}';
-    }
-    
-    
     
 }

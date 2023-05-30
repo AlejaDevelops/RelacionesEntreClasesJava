@@ -2,7 +2,6 @@
 Desarrollar un simulador del sistema de votación de facilitadores en Egg-
 El sistema de votación de Egg tiene una clase llamada Alumno con los siguientes atributos:
 nombre completo, DNI y cantidad de votos. 
-
 Además, crearemos una clase Simulador que va a
 tener los métodos para manejar los alumnos y sus votaciones. Estos métodos serán llamados
 desde el main.
@@ -19,12 +18,17 @@ mismo nombre.
 • Se debe imprimir por pantalla el listado de alumnos.
 • Una vez hecho esto debemos generar una clase Voto, esta clase tendrá como atributos,
 un objeto Alumno que será el alumno que vota y una lista de los alumnos a los que votó.
+
+
 • Crearemos un método votación en la clase Simulador que, recibe el listado de alumnos y
 para cada alumno genera tres votos de manera aleatoria. En este método debemos
 guardar a el alumno que vota, a los alumnos a los que votó y sumarle uno a la cantidad de
 votos a cada alumno que reciba un voto, que es un atributo de la clase Alumno.
 Tener en cuenta que un alumno no puede votarse a sí mismo o votar más de una vez al
 mismo alumno. Utilizar un hashset para resolver esto.
+
+
+
 • Se debe crear un método que muestre a cada Alumno con su cantidad de votos y cuales
 fueron sus 3 votos.
 13
@@ -36,52 +40,46 @@ los 5 facilitadores y los 5 facilitadores suplentes.
  */
 package E5SistemaVotacion;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author AlejaDevelops
  */
-public class Alumno {
-    private String nombreCompleto;
-    private long dni;
-    private int cantVotos;
+public class Voto {
+    private Alumno alumnoVotante;
+    private ArrayList<Alumno> alumnosConVotos;
 
-    public Alumno() {
+    public Voto() {
     }
 
-    public Alumno(String nombreCompleto, long dni, int cantVotos) {
-        this.nombreCompleto = nombreCompleto;
-        this.dni = dni;
-        this.cantVotos = cantVotos;
+    public Voto(Alumno alumnoVotante, ArrayList<Alumno> alumnosConVotos) {
+        this.alumnoVotante = alumnoVotante;
+        this.alumnosConVotos = alumnosConVotos;
     }
 
-    public String getNombreCompleto() {
-        return nombreCompleto;
+    public Alumno getAlumnoVotante() {
+        return alumnoVotante;
     }
 
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
+    public void setAlumnoVotante(Alumno alumnoVotante) {
+        this.alumnoVotante = alumnoVotante;
     }
 
-    public long getDni() {
-        return dni;
+    public ArrayList<Alumno> getAlumnosConVotos() {
+        return alumnosConVotos;
     }
 
-    public void setDni(long dni) {
-        this.dni = dni;
-    }
-
-    public int getCantVotos() {
-        return cantVotos;
-    }
-
-    public void setCantVotos(int cantVotos) {
-        this.cantVotos = cantVotos;
+    public void setAlumnosConVotos(ArrayList<Alumno> alumnosConVotos) {
+        this.alumnosConVotos = alumnosConVotos;
     }
 
     @Override
     public String toString() {
-        return "Alumno{" + "Nombre: " + nombreCompleto + ", DNI: " + dni + ", Cantidad de votos: " + cantVotos + '}';
+        return "Voto{" + "Alumno votante: " + alumnoVotante + ", \n alumnos por los que votó: " + alumnosConVotos + '}';
     }
+    
+    
     
     
     
