@@ -19,22 +19,21 @@ mismo nombre.
 • Se debe imprimir por pantalla el listado de alumnos.
 • Una vez hecho esto debemos generar una clase Voto, esta clase tendrá como atributos,
 un objeto Alumno que será el alumno que vota y una lista de los alumnos a los que votó.
-
-
 • Crearemos un método votación en la clase Simulador que, recibe el listado de alumnos y
 para cada alumno genera tres votos de manera aleatoria. En este método debemos
 guardar a el alumno que vota, a los alumnos a los que votó y sumarle uno a la cantidad de
 votos a cada alumno que reciba un voto, que es un atributo de la clase Alumno.
 Tener en cuenta que un alumno no puede votarse a sí mismo o votar más de una vez al
 mismo alumno. Utilizar un hashset para resolver esto.
-
-
-
 • Se debe crear un método que muestre a cada Alumno con su cantidad de votos y cuales
 fueron sus 3 votos.
-13
+
+
 • Se debe crear un método que haga el recuento de votos, este recibe la lista de Alumnos y
 comienza a hacer el recuento de votos.
+
+
+
 • Se deben crear 5 facilitadores con los 5 primeros alumnos votados y se deben crear 5
 facilitadores suplentes con los 5 segundos alumnos más votados. A continuación, mostrar
 los 5 facilitadores y los 5 facilitadores suplentes.
@@ -43,7 +42,6 @@ package E5SistemaVotacion;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -76,18 +74,15 @@ public class Simulador {
     }
 
     public ArrayList<String> crearNombre(int n) {
-
         String[] Nombres = {"Juan", "María", "Carlos", "Ana", "Pedro", "Laura", "Luis", "Sofía", "Miguel", "Elena"};
         String[] Apellidos = {"González", "Rodríguez", "López", "Martínez", "Pérez", "García", "Sánchez", "Romero", "Fernández", "Torres"};
         ArrayList<String> listaNombres = new ArrayList();
         String nombre, apellido;
-
         for (int i = 0; i < n; i++) {
             nombre = Nombres[r.nextInt(Nombres.length)];
             apellido = Apellidos[r.nextInt(Apellidos.length)];
             listaNombres.add(nombre + " " + apellido);
         }
-
         return listaNombres;
     }
 
@@ -105,67 +100,66 @@ public class Simulador {
         return dniList;
     }
 
-    public void imprimirListaAlumnos(ArrayList<Alumno> listaAlumnos) {        
+    public void imprimirListaAlumnos(ArrayList<Alumno> listaAlumnos) {
         for (Alumno aux : listaAlumnos) {
             System.out.println(aux);
         }
-        System.out.println("------------------------------------------");
+
     }
 
     public void votacion(ArrayList<Alumno> listaAlumnos) {
 
         for (Alumno alumno : listaAlumnos) {//Recorriendo uno a uno la lista de alumnos
-            System.out.println("Hola " + alumno.getNombreCompleto() + " DNI: "+ alumno.getDni()+ ", es tu turno de votar. Recuerda que debes votar por 3 personas. "
+            System.out.println("Hola " + alumno.getNombreCompleto() + " DNI: " + alumno.getDni() + ", es tu turno de votar. Recuerda que debes votar por 3 personas diferentes. "
                     + "\n Esta es la lista de los alumnos por los que puedes votar: ");
             ArrayList<Alumno> listaAlumnoAux = new ArrayList(listaAlumnos); //Guardando la lista de alumnos completa                               
             listaAlumnoAux.remove(alumno); //Removiendo el alumno que está votando de la lista auxiliar
             imprimirListaAlumnos(listaAlumnoAux);
+            System.out.println("");
 
             Voto voto = new Voto();
             voto.setAlumnoVotante(alumno);
             ArrayList<Alumno> alumnosVotadosLista = new ArrayList();
             int cont = 0;
+
             do {
                 System.out.println("Escribe el DNI de la persona por la que deseas votar");
                 long dniParaVotar = leer.nextLong();
+                boolean flag = true;
 
-                for (Alumno aux1 : listaAlumnoAux) { //Recorriendo la lista auxiliar, que no contiene el alumno que está votando                    
-                    long dni = aux1.getDni();
-                    if (aux1.getDni()== dni) {
-                        aux1.setCantVotos(aux1.getCantVotos()+1); //Actualizo la cantidad de votos en aux1
-                        Alumno alumnoVotado = aux1; //En esta variable alumnoVotado estoy guardando toda la información del Alumno aux1: NombreCompleto, DNI y CantVotos actualizada                      
+                for (Alumno aux1 : listaAlumnoAux) { //Recorriendo la lista auxiliar, que no contiene el alumno que está votando 
+                    if (aux1.getDni() == dniParaVotar) {
+                        aux1.setCantVotos(aux1.getCantVotos() + 1); //Actualizo la cantidad de votos en aux1                                             
                         alumnosVotadosLista.add(aux1);//Se acumulan las personas por las que vota en alumnosVotadosLista
-                        listaAlumnoAux.remove(aux1); // y es elimina la persona por la que se votó de listaAlumnoAux                        
+                        listaAlumnoAux.remove(aux1); // y es elimina la persona por la que se votó de listaAlumnoAux para evitar votar por la misma persona varias veces                        
                         cont++; //Contador para controlar la salida del do-whileque se encarga de controlar el numero de votación por persona
+                        flag = false;
                         break; //Una vez se vota, es decir cuando se cumple la condición del if línea 134, se sale del For linea 132 y deja de recorrer la listaAlumnoAux
                     }
-                }                
+                }
+                if (flag) {
+                    System.out.println("El DNI ingresado no es válido, porque no es Alumno registrado o porque ya votaste por él... intenta nuevamente");
+                }
             } while (cont < 3);
             voto.setAlumnosConVotos(alumnosVotadosLista); //Se setea la lista de personas por las que votó
-            System.out.println("Te confirmo que has votado por: ");
-            imprimirListaAlumnos(voto.getAlumnosConVotos());
-            
+            imprimirVotosIndividuales(voto.getAlumnosConVotos());
             for (Alumno alumnosConVoto : voto.getAlumnosConVotos()) { //Se actualizan los votos en la listaAlumnos
                 for (Alumno alumno2 : listaAlumnos) {
-                    if (alumno2.getDni()==alumnosConVoto.getDni()) {
+                    if (alumno2.getDni() == alumnosConVoto.getDni()) {
                         alumno2.setCantVotos(alumnosConVoto.getCantVotos());
                         break;
                     }
                 }
-            } 
+            }
         }
         System.out.println("Todos los alumnos han votado, este es el resultado final: ");
-        imprimirListaAlumnos(listaAlumnos);   
+        imprimirListaAlumnos(listaAlumnos);
     }
 
-   
-
-    /*
-    Crearemos un método votación en la clase Simulador que, recibe el listado de alumnos y
-    para cada alumno genera tres votos de manera aleatoria. En este método debemos
-    guardar a el alumno que vota, a los alumnos a los que votó y sumarle uno a la cantidad de
-    votos a cada alumno que reciba un voto, que es un atributo de la clase Alumno.
-    Tener en cuenta que un alumno no puede votarse a sí mismo o votar más de una vez al
-    mismo alumno. Utilizar un hashset para resolver esto.
-     */
+    public void imprimirVotosIndividuales(ArrayList<Alumno> AlumnosConVotos) {
+        System.out.println("Te confirmo que has votado por: ");
+        imprimirListaAlumnos(AlumnosConVotos);
+        System.out.println("-----------------------------------------------------------------");
+    }
+    
 }

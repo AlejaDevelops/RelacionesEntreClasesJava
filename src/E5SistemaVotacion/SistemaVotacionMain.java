@@ -53,6 +53,7 @@ public class SistemaVotacionMain {
         ArrayList<Alumno> listaAlumnos = s.crearListaAlumnos();
         System.out.println("Lista de alumnos generados:");
         s.imprimirListaAlumnos(listaAlumnos);
+        System.out.println("-----------------------------------------------------------------");
         s.votacion(listaAlumnos);
     }
     
